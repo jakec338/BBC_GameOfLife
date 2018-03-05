@@ -38,6 +38,7 @@ document.getElementById("up").addEventListener("click", function(){
     if (speed > 50){
         speed -= 50;
         userSpeed += 1;
+        setInterval(iterate, speed);
         document.getElementById("speed").innerHTML = userSpeed;
     }
 
@@ -47,6 +48,7 @@ document.getElementById("down").addEventListener("click", function(){
     if (speed < 400){
         speed += 50;
         userSpeed -= 1;
+        setInterval(iterate, speed);
         document.getElementById("speed").innerHTML = userSpeed;
     }
 });
