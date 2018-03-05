@@ -1,0 +1,50 @@
+section {
+    height: 1000px;
+    width: 1000px;
+}
+
+html, body {height:100%;}
+html {display:table; width:100%;}
+body {display:table-cell; text-align:center; vertical-align:middle;}
+
+section div {
+    height: 50px;
+    width: 50px;
+    background: rgba(128, 79, 79, 0.795);
+    border: 10px;
+    border-color: black;
+    float: left;
+}
+
+.alive {
+    background: blue;
+}
+
+.button { 
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.barContainer { 
+    width: 500px;
+    padding-top: 50px;
+}
+
+#myProgress {
+    width: 100%;
+    background-color: grey;
+}
+#myBar {
+    width: 1%;
+    height: 30px;
+    background-color: green;
+}
