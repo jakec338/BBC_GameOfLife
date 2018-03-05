@@ -3,25 +3,30 @@ section {
     width: 1000px;
 }
 
-html, body {height:100%;}
-html {display:table; width:100%;}
-body {display:table-cell; text-align:center; vertical-align:middle;}
+.top { 
+    margin-left: 300px;
+}
+
+.button-group {
+    margin: 30px;
+}
 
 section div {
     height: 50px;
     width: 50px;
-    background: rgba(128, 79, 79, 0.795);
+    background: rgba(231, 120, 120, 0.795);
     border: 10px;
+    border-radius: 50%;
     border-color: black;
     float: left;
 }
 
 .alive {
-    background: blue;
+    background: #00796B;
 }
 
 .button { 
-    background-color: #4CAF50; /* Green */
+    background-color: #00796B; 
     border: none;
     color: white;
     padding: 20px;
@@ -31,20 +36,30 @@ section div {
     font-size: 16px;
     margin: 4px 2px;
     border-radius: 12px;
+    padding: 15px;
     cursor: pointer;
+}
+
+.button:hover { 
+    background-color: rgba(231, 120, 120, 0.795);
 }
 
 .barContainer { 
     width: 500px;
+    height: 100px;
     padding-top: 50px;
+    margin-left: 250px;
 }
 
 #myProgress {
     width: 100%;
-    background-color: grey;
+    height: 100px;
+    background-color:#00796B;
+
 }
 #myBar {
     width: 1%;
-    height: 30px;
-    background-color: green;
+    height: 60px;
+    height: 100px;
+    background-color: rgba(231, 120, 120, 0.795);
 }

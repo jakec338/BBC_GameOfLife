@@ -8,15 +8,16 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.js"></script> 
             <script type="text/babel" src="bbc_js.js"></script>
     </head>
-<body>
-        <h1>Conway's Game of Life</h1>
-        <!-- <button class="buttonload">
-            <i id="it" class="fa fa-spinner fa-spin"></i>Play
-          </button> -->
-        <button id="it" class="button">Play</button>
-        <!-- <div id="myProgress">
-            <div id="myBar"></div>
-        </div> -->
+<body>  
+        <div class="top">
+            <h1>Conway's Game of Life</h1>
+            <button-group class="button-group">
+                <button id="it" class="button">Play</button>
+                <button id="down" class="button">Slow Down</button>
+                <label id="speed" style="padding: 20px">5</label>
+                <button id="up" class="button">Speed Up</button>
+            </button-group>
+        </div>
         <div>
             <section></section>
         </div>

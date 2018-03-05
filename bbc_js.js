@@ -1,24 +1,29 @@
 
 
 // Initialise 
-var gridHeight = 20;
-var gridWidth = 20;
+var gridSize = 20;
 var dead = 0;
 var alive = 0;
 var bar = document.getElementById("myBar");
-let theGrid = createArray(gridWidth);
-let newGrid = createArray(gridWidth);
-let  filledGrid = setupGrid(theGrid);
+let grid1 = createArray(gridSize);
+let newGrid = createArray(gridSize);
+let filledGrid = setupGrid(grid1);
 var animate;
 var paused = true;
+let speed = 250;
+let userSpeed = 5;
 toScreen(filledGrid);
-   
 
 
 
+//------------------------- Buttons -------------------------------------//
+
+
+// Pause / Play
 document.getElementById("it").addEventListener("click", function(){
     if (paused){
-        animate = setInterval(iterate, 500);
+        console.log(speed)
+        animate = setInterval(iterate, speed);
         this.innerHTML = "Pause";
     } else {
         this.innerHTML = "Play";
@@ -26,6 +31,26 @@ document.getElementById("it").addEventListener("click", function(){
         paused = true;
     }
 });
+
+
+// Speed Increment
+document.getElementById("up").addEventListener("click", function(){
+    if (speed > 50){
+        speed -= 50;
+        userSpeed += 1;
+        document.getElementById("speed").innerHTML = userSpeed;
+    }
+
+});
+
+document.getElementById("down").addEventListener("click", function(){
+    if (speed < 400){
+        speed += 50;
+        userSpeed -= 1;
+        document.getElementById("speed").innerHTML = userSpeed;
+    }
+});
+
 
 
 //-------------------------- Functions ----------------------------------//
@@ -39,8 +64,8 @@ function createArray(rows) { //creates empty 2D array
 }
 
 function setupGrid(grid){  // Fills empty array with random 0/1
-    for (let i=0; i < gridHeight; i++){
-        for (let j =0; j < gridHeight; j++){
+    for (let i=0; i < gridSize; i++){
+        for (let j =0; j < gridSize; j++){
             grid[i][j] = Math.round(Math.random());
             if (grid[i][j] == 1){
                 alive += 1;
@@ -49,14 +74,14 @@ function setupGrid(grid){  // Fills empty array with random 0/1
             }
         }
     }
-    var percentage = (dead/(alive+dead))*100;
+    var percentage = (dead/(alive+dead))*100; // calculates percentage for progress bar
     bar.style.width = percentage + '%';
     return grid;
 }
 
-function toScreen(grid){ // assigns square div to each element in array. Add alive class if == 1;
-    for (let i=0; i < gridHeight; i++){
-        for (let j =0; j < gridHeight; j++){
+function toScreen(grid){ // assigns div to each element in array. Add alive class if == 1;
+    for (let i=0; i < gridSize; i++){
+        for (let j =0; j < gridSize; j++){
             var div = document.createElement('div');
             if (grid[i][j] == 1){
                 div.classList.add('alive');
@@ -64,15 +89,12 @@ function toScreen(grid){ // assigns square div to each element in array. Add ali
                 div.classList.remove('alive');
             }
             div.addEventListener("click", function(){
-                console.log(grid[i][j]);
                 if (grid[i][j] == 1){
                     grid[i][j] = 0;
                     this.classList.remove('alive');
-                    console.log(grid[i][j] +  "now");
                 } else{
                     grid[i][j] = 1;
                     this.classList.add('alive');
-                    console.log(grid[i][j] +  "now");
                 }
             });
             document.getElementsByTagName('section')[0].appendChild(div);
@@ -86,41 +108,36 @@ function iterate(){  // Takes in grid and fills new grid with updated values.
     paused = false;
     dead = 0;
     alive = 0;
-    for (let i=1; i < gridHeight-1; i++){
-        for (let j =1; j < gridHeight-1; j++){
+    for (let i=1; i < gridSize-1; i++){
+        for (let j =1; j < gridSize-1; j++){
             var sum = 0;
-            //add up the total values for the surrounding cells
-            sum += theGrid[i - 1][j - 1]; //top left
-            sum += theGrid[i - 1][j]; //top center
-            sum += theGrid[i - 1][j + 1]; //top right
+            sum += grid1[i - 1][j - 1]; 
+            sum += grid1[i - 1][j]; 
+            sum += grid1[i - 1][j + 1]; 
+            sum += grid1[i + 1][j - 1]; 
+            sum += grid1[i + 1][j]; 
+            sum += grid1[i + 1][j + 1];
+            sum += grid1[i][j - 1]; 
+            sum += grid1[i][j + 1]; 
 
-            sum += theGrid[i][j - 1]; //middle left
-            sum += theGrid[i][j + 1]; //middle right
-
-            sum += theGrid[i + 1][j - 1]; //bottom left
-            sum += theGrid[i + 1][j]; //bottom center
-            sum += theGrid[i + 1][j + 1];
-
-            switch (sum) {
+            switch (sum) { // Game of life logic 
                 case 2:
-                    newGrid[i][j] = theGrid[i][j];
-                   
+                    newGrid[i][j] = grid1[i][j]; 
                     break;
                 case 3:
-                    newGrid[i][j] = 1; //live
-                    
+                    newGrid[i][j] = 1;
                     break;
                 default:
-                    newGrid[i][j] = 0; //
+                    newGrid[i][j] = 0;
             }
 
-            for (var l = 1; l < gridHeight - 1; l++) { //iterate through rows
-                //top and bottom
-                newGrid[l][0] = newGrid[l][gridHeight - 2];
-                newGrid[l][gridHeight - 2] = newGrid[l][1];
-                //left and right
-                newGrid[0][l] = newGrid[gridHeight - 2][l];
-                newGrid[gridHeight - 2][l] = newGrid[1][l];
+            for (var x = 1; x < gridSize - 1; x++) {  // mirroring
+
+                newGrid[x][0] = newGrid[x][gridSize];
+                newGrid[x][gridSize] = newGrid[x][0]; 
+                
+                newGrid[0][x] = newGrid[gridSize - 1][x];
+                newGrid[gridSize - 1][x] = newGrid[1][x];
     
             }
             if (newGrid[i][j] == 1){
@@ -133,15 +150,13 @@ function iterate(){  // Takes in grid and fills new grid with updated values.
 
     var percentage = (dead/(alive+dead))*100;
     bar.style.width = percentage + '%';
-    console.log(percentage);
     var myNode = document.getElementsByTagName('section')[0];
-    while (myNode.firstChild) {
+    while (myNode.firstChild) { // remove current divs
         myNode.removeChild(myNode.firstChild);
-
     }
-    toScreen(newGrid);
-    theGrid = newGrid
-    newGrid = createArray(gridWidth);
+    toScreen(newGrid); // apply new divs
+    grid1 = newGrid
+    newGrid = createArray(gridSize);
     
 }
 
