@@ -33,13 +33,7 @@ document.getElementById("it").addEventListener("click", function(){
 });
 
 document.getElementById("restart").addEventListener("click", function(){
-    var myNode = document.getElementsByTagName('section')[0];
-    while (myNode.firstChild) { // remove current divs
-        myNode.removeChild(myNode.firstChild);
-    }
-    let grid1 = createArray(gridSize);
-    let filledGrid = setupGrid(grid1);
-    toScreen(filledGrid);
+    location.reload();
 });
 
 
