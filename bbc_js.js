@@ -10,7 +10,7 @@ let newGrid = createArray(gridSize);
 let filledGrid = setupGrid(grid1);
 var animate;
 var paused = true;
-let speed = 250;
+let speed = 300;
 let userSpeed = 5;
 toScreen(filledGrid);
 
@@ -18,12 +18,10 @@ toScreen(filledGrid);
 
 //------------------------- Buttons -------------------------------------//
 
-
 // Pause / Play
 document.getElementById("it").addEventListener("click", function(){
     if (paused){
-        console.log(speed)
-        animate = setInterval(iterate, speed);
+        iterate();
         this.innerHTML = "Pause";
     } else {
         this.innerHTML = "Play";
@@ -39,20 +37,19 @@ document.getElementById("restart").addEventListener("click", function(){
 
 // Speed Increment
 document.getElementById("up").addEventListener("click", function(){
-    if (speed > 50){
+    if (speed > 50 && userSpeed < 10){
         speed -= 50;
         userSpeed += 1;
-        setInterval(iterate, speed);
         document.getElementById("speed").innerHTML = userSpeed;
     }
 
 });
 
 document.getElementById("down").addEventListener("click", function(){
-    if (speed < 400){
+    if (speed <= 450){
         speed += 50;
         userSpeed -= 1;
-        setInterval(iterate, speed);
+        // animate = setInterval(iterate, speed);
         document.getElementById("speed").innerHTML = userSpeed;
     }
 });
@@ -163,7 +160,7 @@ function iterate(){  // Takes in grid and fills new grid with updated values.
     toScreen(newGrid); // apply new divs
     grid1 = newGrid
     newGrid = createArray(gridSize);
-    
+    animate = window.setTimeout(iterate, speed);
 }
 
 
